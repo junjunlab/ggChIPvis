@@ -1,0 +1,17 @@
+Package: ggChIPvis
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.1
+Maintainer: Jun Zhang <3219030654@stu.cpu.edu.cn>
+Authors@R: 
+    person("Jun", "Zhang", , "3219030654@stu.cpu.edu.cn", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+biocViews: EnrichedHeatmap,ChIPseeker
+Remotes: 
+  teunbrand/ggh4x
+Imports: 
+    magrittr
