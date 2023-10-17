@@ -1,11 +1,12 @@
 Package: ggChIPvis
-Title: What the Package Does (One Line, Title Case)
+Title: Drawing profile and heatmap for ChIP-seq with ggplot2
 Version: 0.0.1
 Maintainer: Jun Zhang <3219030654@stu.cpu.edu.cn>
 Authors@R: 
     person("Jun", "Zhang", , "3219030654@stu.cpu.edu.cn", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: Using the EnrichedHeatmap::normalizeToMatrix, ChIPseeker::getTagMatrix 
+  and deeptools' computeMatrix output data to regenerate plots with ggplot2 R package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -14,4 +15,15 @@ biocViews: EnrichedHeatmap,ChIPseeker
 Remotes: 
   teunbrand/ggh4x
 Imports: 
-    magrittr
+    aplot,
+    data.table,
+    dplyr,
+    EnrichedHeatmap,
+    ggh4x,
+    ggplot2,
+    magrittr,
+    purrr,
+    reshape2,
+    Rmisc,
+    S4Vectors,
+    stringr
