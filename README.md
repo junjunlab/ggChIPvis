@@ -1,5 +1,4 @@
-
-# ggChIPvis
+# ggChIPvis <img src="man/ggChIPvis-logo.png" align="right" height="200" />
 
 <!-- badges: start -->
 
