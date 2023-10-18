@@ -20,12 +20,19 @@ devtools::install_github("junjunlab/ggChIPvis")
 
 # or
 remotes::install_github("junjunlab/ggChIPvis")
-library(ggChIPvis)
 ```
+
+---
 
 ## Citation
 
 > Jun Zhang (2023). *ggChIPvis: Profile and Heatmap Visualization by Using ggplot2.*  https://github.com/junjunlab/ggChIPvis
+
+---
+
+## News
+
+---
 
 ## Documentation
 
