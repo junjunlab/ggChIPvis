@@ -1,25 +1,40 @@
-
-# ggChIPvis
+# ggChIPvis <img src="man/ggChIPvis-logo.png" align="right" height="200" />
 
 <!-- badges: start -->
-<!-- badges: end -->
 
-The goal of ggChIPvis is to ...
+**ggChIPvis** is designed to re-produce the ***Profile*** and ***Heatmap*** plots uisng
+**ggplot2** package with more parameter controls and settings. **ggChIPvis** can accept
+the data from **EnrichedHeatmap::normalizeToMatrix**, **ChIPseeker::getTagMatrix** and deeptools'
+**computeMatrix** output data which allow you re-draw the plot in R session with other
+graphic modifications.
+
+<!-- badges: end -->
 
 ## Installation
 
 You can install the development version of ggChIPvis like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# install.packages("devtools")
+devtools::install_github("junjunlab/ggChIPvis")
+
+# or
+remotes::install_github("junjunlab/ggChIPvis")
 ```
 
-## Example
+---
 
-This is a basic example which shows you how to solve a common problem:
+## Citation
 
-``` r
-library(ggChIPvis)
-## basic example code
-```
+> Jun Zhang (2023). *ggChIPvis: Profile and Heatmap Visualization by Using ggplot2.*  https://github.com/junjunlab/ggChIPvis
+
+---
+
+## News
+
+---
+
+## Documentation
+
+> ***[https://junjunlab.github.io/ggChIPvis-manual/](https://junjunlab.github.io/ggChIPvis-manual/)***
 
