@@ -11,6 +11,7 @@ ChipVis(
   group.order = NULL,
   group2.order = NULL,
   rowsplit.order = NULL,
+  rowgroup.order = NULL,
   facet_profile_params = list(),
   facet_heatmap_params = list(),
   theme_params = list(),
@@ -43,6 +44,8 @@ Must have "profile" and "heatmap" components.}
 \item{group2.order}{Order of the secondary groups for plotting. Default is NULL.}
 
 \item{rowsplit.order}{Order of the heatmap row split. Default is NULL.}
+
+\item{rowgroup.order}{Order of the heatmap row split groups. Default is NULL.}
 
 \item{facet_profile_params}{A list parameters for customizing the profile facet layer.
 Details see ggh4x::facet_nested().}

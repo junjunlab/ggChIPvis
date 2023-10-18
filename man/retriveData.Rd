@@ -11,6 +11,7 @@ retriveData(
   rm.extreme.value = FALSE,
   group.sample = NULL,
   group2.sample = NULL,
+  group.split = NULL,
   aggregate.fun = c("mean", "median"),
   ChIPseeker = FALSE,
   heatmap_rank_method = c("sum", "mean", "median", "weighting")
@@ -31,6 +32,8 @@ signal values. Default FALSE.}
 \item{group.sample}{A character vector specifying the group of each sample.}
 
 \item{group2.sample}{A character vector specifying the second group of each sample.}
+
+\item{group.split}{A list specifying the group of row splits.}
 
 \item{aggregate.fun}{A character vector specifying the aggregate function(mean/meidan) to
 use for profile data. Default "mean".}

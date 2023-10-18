@@ -17,6 +17,7 @@
 #' signal values. Default FALSE.
 #' @param group.sample A character vector specifying the group of each sample.
 #' @param group2.sample A character vector specifying the second group of each sample.
+#' @param group.split A list specifying the group of row splits.
 #' @param aggregate.fun A character vector specifying the aggregate function(mean/meidan) to
 #' use for profile data. Default "mean".
 #' @param ChIPseeker Logical value indicating whether "ChIPseeker" output data is used.
@@ -35,6 +36,7 @@ retriveData <- function(mat.list = NULL,
                         rm.extreme.value = FALSE,
                         group.sample = NULL,
                         group2.sample = NULL,
+                        group.split = NULL,
                         aggregate.fun = c("mean","median"),
                         ChIPseeker = FALSE,
                         heatmap_rank_method = c("sum","mean","median","weighting")){
@@ -105,6 +107,20 @@ retriveData <- function(mat.list = NULL,
       if(!is.null(group2.sample)){
         df.profile$group2 <- group2.sample[x]
       }
+    }
+
+    # group.split <- list(g1 = letters[1:3],
+    #                     g2 = letters[4:6])
+
+    # add groups for row split
+    # x = 2
+    if(!is.null(group.split)){
+      purrr::map_df(seq_along(group.split),function(x){
+        tmp <- df.profile[which(df.profile$split %in% group.split[[x]]),]
+        tmp$split.group <- names(group.split)[x]
+
+        return(tmp)
+      }) -> df.profile
     }
 
     return(df.profile)
@@ -205,6 +221,19 @@ retriveData <- function(mat.list = NULL,
       if(!is.null(group2.sample)){
         df.heatmap$group2 <- group2.sample[x]
       }
+    }
+
+    # add groups for row split
+    # x = 1
+    if(!is.null(group.split)){
+      df.heatmap$split.tmp <- sapply(strsplit(df.heatmap$split,split = "\n"),"[",1)
+      purrr::map_df(seq_along(group.split),function(x){
+        tmp <- df.heatmap[which(df.heatmap$split.tmp %in% group.split[[x]]),]
+        tmp$split.group <- names(group.split)[x]
+        tmp <- tmp[,-7]
+
+        return(tmp)
+      }) -> df.heatmap
     }
 
     return(df.heatmap)
@@ -379,6 +408,7 @@ retriveData <- function(mat.list = NULL,
   res <- structure(res,
                    group_sample = group.sample,
                    group2_sample = group2.sample,
+                   group_split = group.split,
                    axis_name = axis_name,
                    axis_breaks = breaks,
                    vline_x = vline.x,

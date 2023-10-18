@@ -1,4 +1,4 @@
-globalVariables(c("group", "group2", "value", "x", "y", "yend"))
+globalVariables(c("group", "group2", "value", "x", "y", "yend","split.group"))
 
 #' ChipVis Function
 #'
@@ -17,6 +17,7 @@ globalVariables(c("group", "group2", "value", "x", "y", "yend"))
 #' @param group.order Order of the groups for plotting. Default is NULL.
 #' @param group2.order Order of the secondary groups for plotting. Default is NULL.
 #' @param rowsplit.order Order of the heatmap row split. Default is NULL.
+#' @param rowgroup.order Order of the heatmap row split groups. Default is NULL.
 #' @param facet_profile_params A list parameters for customizing the profile facet layer.
 #' Details see ggh4x::facet_nested().
 #' @param facet_heatmap_params A list parameters for customizing the heatmap facet layer.
@@ -60,6 +61,7 @@ ChipVis <- function(object = NULL,
                     group.order = NULL,
                     group2.order = NULL,
                     rowsplit.order = NULL,
+                    rowgroup.order = NULL,
                     facet_profile_params = list(),
                     facet_heatmap_params = list(),
                     theme_params = list(),
@@ -114,6 +116,13 @@ ChipVis <- function(object = NULL,
     df.profile$split <- factor(df.profile$split,levels = rowsplit.order)
     df.heatmap$split <- factor(df.heatmap$split,levels = rowsplit.order)
   }
+
+  # rowgroup.order orders
+  # rowgroup.order = NULL
+  if(!is.null(rowgroup.order)){
+    df.profile$split.group <- factor(df.profile$split.group,levels = rowgroup.order)
+    df.heatmap$split.group <- factor(df.heatmap$split.group,levels = rowgroup.order)
+  }
   # ============================================================================
   # layers
   # ============================================================================
@@ -136,7 +145,12 @@ ChipVis <- function(object = NULL,
         cols = vars(group,sample)
       }
     }
-    rows = vars(split)
+
+    if(is.null(attrs$group_split)){
+      rows = vars(split)
+    }else{
+      rows = vars(split.group,split)
+    }
   }
 
   # facet_profile_params = list()
@@ -407,11 +421,17 @@ ChipVis <- function(object = NULL,
       ppfofile.new <- ppfofile.new +
         theme(strip.background = element_blank(),
               ggh4x.facet.nestline = element_line(colour = "black",linewidth = 1))
-    }
 
-    pheatmap.new <- pheatmap +
-      theme(strip.background.x = element_blank(),
-            strip.text.x = element_blank())
+      if(!is.null(attrs$group_split)){
+        pheatmap.new <- pheatmap +
+          theme(strip.background = element_blank(),
+                ggh4x.facet.nestline = element_line(colour = "black",linewidth = 1))
+      }else{
+        pheatmap.new <- pheatmap +
+          theme(strip.text.x = element_blank(),
+                strip.background.x = element_blank())
+      }
+    }
 
     # combine
     # rel_height = c(0.3,0.7)
@@ -421,3 +441,4 @@ ChipVis <- function(object = NULL,
 
   return(p)
 }
+
