@@ -32,6 +32,7 @@ remotes::install_github("junjunlab/ggChIPvis")
 
 ## News
 
+- 2023/10/20  (Setting **independent** arg in **if** loop.)
 - 2023/10/18  (Add **group.split** in retriveData and **rowgroup.order** in ChipVis.)
 ---
 
