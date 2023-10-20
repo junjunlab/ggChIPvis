@@ -166,13 +166,19 @@ ChipVis <- function(object = NULL,
 
   # heatmap factet layer
   # facet_heatmap_params = list()
+  if(length(unique(df.heatmap$split)) > 1){
+    independent <- "none"
+  }else{
+    independent <- "y"
+  }
+
   facet_layer.heatmap <- do.call(facet_nested,
                                  modifyList(list(cols = cols,
                                                  rows = rows,
                                                  solo_line = TRUE,
                                                  switch = "y",
                                                  scales = "free",space = "free_y",
-                                                 independent = "y"),
+                                                 independent = independent),
                                             facet_heatmap_params))
 
   # ============================================
