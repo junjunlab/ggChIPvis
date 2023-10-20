@@ -83,7 +83,7 @@ retriveData <- function(mat.list = NULL,
     # group for rows
     # x = "A"
     purrr::map_df(sort(unique(row_split)),function(split){
-      idx <- base::grep(split,row_split)
+      idx <- base::grep(paste0("^",split,"$"),row_split)
 
       fun.apply <- match.fun(myfun)
       mean_mat <- apply(norm_mat[idx,], 2, fun.apply)
@@ -170,7 +170,7 @@ retriveData <- function(mat.list = NULL,
     # extract heatmap data
     # split = "genes"
     purrr::map_df(sort(unique(row_split)),function(split){
-      idx <- base::grep(split,row_split)
+      idx <- base::grep(paste0("^",split,"$"),row_split)
 
       tmp_mat <- data.frame(norm_mat[idx,])
       colnames(tmp_mat) <- 1:ncol(tmp_mat)
