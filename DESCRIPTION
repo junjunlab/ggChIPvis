@@ -1,6 +1,6 @@
 Package: ggChIPvis
-Title: Drawing profile and heatmap for ChIP-seq with ggplot2
-Version: 0.0.1
+Title: Drawing profile and heatmap for ChIP-seq with ggplot2 and grid
+Version: 0.0.2
 Maintainer: Jun Zhang <3219030654@stu.cpu.edu.cn>
 Authors@R: 
     person("Jun", "Zhang", , "3219030654@stu.cpu.edu.cn", role = c("aut", "cre"),
@@ -21,8 +21,10 @@ Imports:
     EnrichedHeatmap,
     ggh4x,
     ggplot2,
+    gtable,
     magrittr,
     purrr,
+    RColorBrewer,
     reshape2,
     Rmisc,
     S4Vectors,
