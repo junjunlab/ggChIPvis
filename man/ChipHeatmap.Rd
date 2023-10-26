@@ -15,6 +15,7 @@ ChipHeatmap(
   ht.col.legend.nbreaks = 4,
   ht.xaxis.rot = 0,
   col.range = NULL,
+  ht.colorkey.params = list(),
   heatmap_rank_method = c("weighting", "sum", "mean", "median"),
   draw.legend = TRUE,
   legend.pos = c("right", "bottom"),
@@ -31,6 +32,7 @@ ChipHeatmap(
   profile.line.size = 1,
   profile.y.range = NULL,
   profile.yaxis = TRUE,
+  profile.yaxis.params = list(),
   draw.line.legend = TRUE,
   profile.legend.size = c(0.25, 0.5),
   profile.legend.fontsize = 8,
@@ -69,6 +71,8 @@ the x-axis labels. Default is 0.}
 
 \item{col.range}{A numeric vector specifying the range of colors for
 the heatmap. Default is \code{NULL}.}
+
+\item{ht.colorkey.params}{A list of parameters passed by grid.colorkey functions.}
 
 \item{heatmap_rank_method}{A character string specifying the method for
 ranking the heatmap. The available options are "weighting", "sum",
@@ -119,6 +123,8 @@ profile. Default is \code{NULL}.}
 
 \item{profile.yaxis}{A logical value indicating whether to draw the y-axis
 of the profile. Default is \code{TRUE}.}
+
+\item{profile.yaxis.params}{A list of parameters passed by grid.yaxis2 functions.}
 
 \item{draw.line.legend}{A logical value indicating whether to draw the line
 legend. Default is \code{TRUE}.}

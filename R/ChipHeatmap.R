@@ -24,6 +24,7 @@
 #' the x-axis labels. Default is 0.
 #' @param col.range A numeric vector specifying the range of colors for
 #' the heatmap. Default is \code{NULL}.
+#' @param ht.colorkey.params A list of parameters passed by grid.colorkey functions.
 #' @param heatmap_rank_method A character string specifying the method for
 #' ranking the heatmap. The available options are "weighting", "sum",
 #' "mean", and "median". Default is "weighting". Note "weighting" can not
@@ -54,6 +55,7 @@
 #' profile. Default is \code{NULL}.
 #' @param profile.yaxis A logical value indicating whether to draw the y-axis
 #' of the profile. Default is \code{TRUE}.
+#' @param profile.yaxis.params A list of parameters passed by grid.yaxis2 functions.
 #' @param draw.line.legend A logical value indicating whether to draw the line
 #' legend. Default is \code{TRUE}.
 #' @param profile.legend.size A numeric vector specifying the size of the line
@@ -88,6 +90,7 @@ ChipHeatmap <- function(norm.mat = NULL,
                         ht.col.legend.nbreaks = 4,
                         ht.xaxis.rot = 0,
                         col.range = NULL,
+                        ht.colorkey.params = list(),
                         heatmap_rank_method = c("weighting","sum","mean","median"),
                         draw.legend = TRUE,
                         legend.pos = c("right","bottom"),
@@ -104,6 +107,7 @@ ChipHeatmap <- function(norm.mat = NULL,
                         profile.line.size = 1,
                         profile.y.range = NULL,
                         profile.yaxis = TRUE,
+                        profile.yaxis.params = list(),
                         draw.line.legend = TRUE,
                         profile.legend.size = c(0.25,0.5),
                         profile.legend.fontsize = 8,
@@ -339,10 +343,9 @@ ChipHeatmap <- function(norm.mat = NULL,
       range.val <- col.range
     }
 
-    range_col <- match.col2val(cols = ht.col,cols.n = 100,range.val = range.val)
+    range_col <- match.col2val(x = df.coord$value,cols = ht.col,value.limits = col.range)
 
     # add colors for each value
-    # x = 100
     purrr::map_df(1:nrow(range_col), function(x){
       tmp <- range_col[x,]
 
@@ -394,10 +397,6 @@ ChipHeatmap <- function(norm.mat = NULL,
 
   # draw x axis for heatmap
   # ht.xaxis.rot = 0
-  # xaxis.grob <- suppressWarnings(xaxisGrob(at = attrs$breaks,label = attrs$axis_name,
-  #                                          vp = viewport(xscale = c(1,ncol(mat))),
-  #                                          edits = gEdit(gPath="labels",rot = ht.xaxis.rot)))
-
   if(ht.xaxis.rot == 0){
     hjust <- attrs$text.x.hjust
   }else{
@@ -448,9 +447,9 @@ ChipHeatmap <- function(norm.mat = NULL,
     # profie.yaxis = TRUE
     if(profile.yaxis == TRUE){
       # profile.yaxis.params = list()
-      # yaxis.grob <- do.call(grid.yaxis2,modifyList(list(breaks = 3,draw = FALSE,vp = vp.profile),
-      #                                              profile.yaxis.params))
-      yaxis.grob <- yaxisGrob(vp = vp.profile)
+      yaxis.grob <- do.call(grid.yaxis2,modifyList(list(breaks = 3,draw = FALSE,vp = vp.profile),
+                                                   profile.yaxis.params))
+      # yaxis.grob <- yaxisGrob(vp = vp.profile)
       # yaxis.grob <- grid.yaxis2(breaks = 1,draw = FALSE,vp = vp.profile)
     }else{
       yaxis.grob <- zeroGrob()
@@ -560,32 +559,48 @@ ChipHeatmap <- function(norm.mat = NULL,
   # draw.legend = TRUE
   if(draw.legend == TRUE){
     if(legend.pos == "right"){
-      vp.rlegend <- viewport(yscale = legend.col.rg)
+      # vp.rlegend <- viewport(yscale = legend.col.rg)
 
-      colorbar.grob <- grid.colorkey2(x = legend.col.rg,pos = "v",ticks.side = "right",
-                                      color = ht.col)
+      # colorbar.grob <- grid.colorkey2(x = legend.col.rg,pos = "v",ticks.side = "right",
+      #                                 color = ht.col)
+      #
+      # axis.grob <- grid.yaxis2(breaks = ht.col.legend.nbreaks,side = "right",draw = FALSE,vp = vp.rlegend)
 
-      # axis.grob <- yaxisGrob(main = FALSE,vp = vp.rlegend)
-      axis.grob <- grid.yaxis2(breaks = ht.col.legend.nbreaks,side = "right",draw = FALSE,vp = vp.rlegend)
+      # ht.colorkey.params = list()
+      colorbar.grob <- do.call(grid.colorkey,modifyList(list(x = legend.col.rg,
+                                                             pos = "v",
+                                                             ticks.side = "right",
+                                                             color = ht.col,
+                                                             value.limits = legend.col.rg,
+                                                             draw = FALSE),
+                                                        ht.colorkey.params))
 
       panel.pos <- c(3,4)
     }else if(legend.pos == "bottom"){
-      vp.blegend <- viewport(xscale = legend.col.rg)
+      # vp.blegend <- viewport(xscale = legend.col.rg)
 
-      colorbar.grob <- grid.colorkey2(x = legend.col.rg,pos = "h",ticks.side = "bottom",
-                                      color = ht.col)
+      # colorbar.grob <- grid.colorkey2(x = legend.col.rg,pos = "h",ticks.side = "bottom",
+      #                                 color = ht.col)
+      #
+      # axis.grob <- grid.xaxis2(breaks = ht.col.legend.nbreaks,side = "bottom",draw = FALSE,vp = vp.blegend)
 
-      # axis.grob <- xaxisGrob(vp = vp.blegend)
-      axis.grob <- grid.xaxis2(breaks = ht.col.legend.nbreaks,side = "bottom",draw = FALSE,vp = vp.blegend)
+      colorbar.grob <- do.call(grid.colorkey,modifyList(list(x = legend.col.rg,
+                                                             pos = "h",
+                                                             ticks.side = "bottom",
+                                                             color = ht.col,
+                                                             value.limits = legend.col.rg,
+                                                             draw = FALSE),
+                                                        ht.colorkey.params))
 
       panel.pos <- c(5,3)
     }
 
     # add to panel
     main.vp <- gtable::gtable_add_grob(main.vp,
-                                       grobs = list(colorbar.grob,axis.grob),
+                                       grobs = list(colorbar.grob),
                                        t = panel.pos[1],l = panel.pos[2],
-                                       name = c("colorbar","colorbar.label"),
+                                       # name = c("colorbar","colorbar.label"),
+                                       name = c("colorbar"),
                                        clip = "off")
 
   }

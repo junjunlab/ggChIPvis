@@ -2,20 +2,34 @@
 % Please edit documentation in R/visFuncUtils.R
 \name{match.col2val}
 \alias{match.col2val}
-\title{Mapping a numeric range to colors}
+\title{Match Values to Colors and Retrieve Color Data Frame}
 \usage{
-match.col2val(cols = c("white", "red"), cols.n = 100, range.val = NULL)
+match.col2val(
+  x = NULL,
+  cols = c("white", "red"),
+  color.n = 100,
+  value.limits = NULL
+)
 }
 \arguments{
-\item{cols}{the colors to be mapped, default c("white","red").}
+\item{x}{A numeric vector of values to be matched with colors. Default is NULL.}
 
-\item{cols.n}{the numbers color to be generated, default 100.}
+\item{cols}{A character vector of color values. Default is c("white", "red").}
 
-\item{range.val}{the data range to be mapped.}
+\item{color.n}{The number of color values to generate. Default is 100.}
+
+\item{value.limits}{A numeric vector specifying the value limits for mapping
+to colors. Default is NULL.}
 }
 \value{
-a data.frame
+A data frame with columns: 'col' for colors, 'left' for left values,
+and 'right' for right values.
 }
 \description{
-Mapping a numeric range to colors
+This function maps values to colors based on specified color values and
+optional value limits, and returns a data frame with color, left value, and
+right value columns.
+}
+\seealso{
+\code{\link[circlize]{colorRamp2}}, \code{\link[circlize]{col2value}}
 }

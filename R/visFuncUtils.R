@@ -1,397 +1,49 @@
-#' grid.yaxis2 function
-#' @author Jun Zhang
+#' Match Values to Colors and Retrieve Color Data Frame
 #'
-#' This function creates a y-axis in a graphical grid.
+#' This function maps values to colors based on specified color values and
+#' optional value limits, and returns a data frame with color, left value, and
+#' right value columns.
 #'
-#' @param at numeric vector specifying the locations of tick marks on the axis.
-#' @param breaks integer specifying the number of breaks on the axis.
-#' @param labels character vector providing custom labels for the tick marks.
-#' @param tick.len numeric specifying the length of the tick marks.
-#' @param label.space numeric specifying the space between the tick marks and labels.
-#' @param side character specifying the side to place the axis ("left" or "right").
-#' @param ticks.gp gpar() seetings for the axis ticks.
-#' @param text.gp gpar() seetings for the axis label.
-#' @param hjust label hjust.
-#' @param vjust label vjust.
-#' @param rot numeric specifying the rotation angle for the tick mark labels.
-#' @param draw if draw == "FALSE" , then return a gTree object.
-#' @param vp viewport seetings.
+#' @param x A numeric vector of values to be matched with colors. Default is NULL.
+#' @param cols A character vector of color values. Default is c("white", "red").
+#' @param color.n The number of color values to generate. Default is 100.
+#' @param value.limits A numeric vector specifying the value limits for mapping
+#' to colors. Default is NULL.
 #'
-#' @import grid
+#' @return A data frame with columns: 'col' for colors, 'left' for left values,
+#' and 'right' for right values.
+#'
+#' @seealso \code{\link[circlize]{colorRamp2}}, \code{\link[circlize]{col2value}}
+#'
+#' @importFrom circlize colorRamp2 col2value
 #'
 #' @export
-grid.yaxis2 <- function(at = NULL,
-                        breaks = 5,
-                        labels = NULL,
-                        tick.len = 0.5,
-                        label.space = 0.25,
-                        side = c("left","right"),
-                        rot = 0,
-                        ticks.gp = NULL,
-                        text.gp = NULL,
-                        hjust = NULL,
-                        vjust = NULL,
-                        draw = TRUE,
-                        vp = NULL){
-  # labels and ticks
-  if(is.null(at) || is.null(labels)){
-    if(is.null(vp)){
-      at <- grid.pretty(current.viewport()$yscale,n = breaks)
-    }else{
-      at <- grid.pretty(vp$yscale,n = breaks)
-    }
-    labels <- as.character(at)
-  }else{
-    at <- at
-    labels <- as.character(labels)
-  }
-
-  # axis position
-  side <- match.arg(side,c("left","right"))
-  if(side == "left"){
-    tck.x0 = unit(0, "npc")
-    tck.x1 = unit(-tick.len, "lines")
-    text.x = unit(-tick.len - label.space,"lines")
-    text.just = "right"
-  }else{
-    tck.x0 = unit(1, "npc")
-    tck.x1 = unit(1, "npc") + unit(tick.len, "lines")
-    text.x = unit(abs(tick.len) + abs(label.space),"lines") + unit(1, "npc")
-    text.just = "left"
-  }
-
-  if(draw == TRUE){
-    grid.segments(x0 = 0,x1 = 0,y0 = 0,y1 = 1,vp = vp)
-    grid.segments(y0 = unit(at, "native"),y1 = unit(at, "native"),
-                  x0 = tck.x0,x1 = tck.x1,
-                  gp = ticks.gp,vp = vp)
-
-    grid.text(label = labels,
-              y = unit(at, "native"),x = text.x,
-              rot = rot,
-              just = text.just,hjust = hjust,vjust = vjust,
-              gp = text.gp,vp = vp)
-  }else{
-    seg.main <- segmentsGrob(x0 = 0,x1 = 0,y0 = 0,y1 = 1)
-
-    ticks <- segmentsGrob(y0 = unit(at, "native"),y1 = unit(at, "native"),
-                          x0 = tck.x0,x1 = tck.x1,
-                          gp = ticks.gp)
-
-    text <- textGrob(label = labels,
-                     y = unit(at, "native"),x = text.x,
-                     rot = rot,
-                     just = text.just,hjust = hjust,vjust = vjust,
-                     gp = text.gp)
-
-    comb <- gTree(children = gList(seg.main,ticks,text),vp = vp)
-    # comb <- gList(seg.main,ticks,text)
-    return(comb)
-  }
-}
-
-
-
-#' This function creates a x-axis in a graphical grid.
-#'
-#' @param at numeric vector specifying the locations of tick marks on the axis.
-#' @param breaks integer specifying the number of breaks on the axis.
-#' @param labels character vector providing custom labels for the tick marks.
-#' @param tick.len numeric specifying the length of the tick marks.
-#' @param label.space numeric specifying the space between the tick marks and labels.
-#' @param side character specifying the side to place the axis ("bottom" or "top").
-#' @param ticks.gp gpar() seetings for the axis ticks.
-#' @param text.gp gpar() seetings for the axis label.
-#' @param hjust label hjust.
-#' @param vjust label vjust.
-#' @param rot numeric specifying the rotation angle for the tick mark labels.
-#' @param draw if draw == "FALSE" , then return a gTree object.
-#' @param vp viewport seetings.
-#'
-#' @export
-grid.xaxis2 <- function(at = NULL,
-                        breaks = 5,
-                        labels = NULL,
-                        tick.len = 0.5,
-                        label.space = 0.5,
-                        side = c("bottom","top"),
-                        rot = 0,
-                        ticks.gp = NULL,
-                        text.gp = NULL,
-                        hjust = NULL,
-                        vjust = NULL,
-                        draw = TRUE,
-                        vp = NULL){
-  # labels and ticks
-  if(is.null(at) || is.null(labels)){
-    if(is.null(vp)){
-      at <- grid.pretty(current.viewport()$yscale,n = breaks)
-    }else{
-      at <- grid.pretty(vp$xscale,n = breaks)
-    }
-    labels <- as.character(at)
-  }else{
-    at <- at
-    labels <- as.character(labels)
-  }
-
-  # axis position
-  side <- match.arg(side,c("bottom","top"))
-  if(side == "bottom"){
-    tck.y0 = unit(0, "npc")
-    tck.y1 = unit(-tick.len, "lines")
-    text.y = unit(-tick.len - label.space,"lines")
-  }else{
-    tck.y0 = unit(1, "npc")
-    tck.y1 = unit(1, "npc") + unit(tick.len, "lines")
-    text.y = unit(abs(tick.len) + abs(label.space),"lines") + unit(1, "npc")
-  }
-
-  if(draw == TRUE){
-    grid.segments(x0 = 0,x1 = 1,y0 = 0,y1 = 0,vp = vp)
-    grid.segments(x0 = unit(at, "native"),x1 = unit(at, "native"),
-                  y0 = tck.y0,y1 = tck.y1,
-                  gp = ticks.gp,vp = vp)
-
-    grid.text(label = labels,
-              x = unit(at, "native"),y = text.y,
-              rot = rot,
-              hjust = hjust,vjust = vjust,
-              gp = text.gp,vp = vp)
-  }else{
-    seg.main <- segmentsGrob(x0 = 0,x1 = 1,y0 = 0,y1 = 0)
-
-    ticks <- segmentsGrob(x0 = unit(at, "native"),x1 = unit(at, "native"),
-                          y0 = tck.y0,y1 = tck.y1,
-                          gp = ticks.gp)
-
-    text <- textGrob(label = labels,
-                     x = unit(at, "native"),y = text.y,
-                     rot = rot,
-                     hjust = hjust,vjust = vjust,
-                     gp = text.gp)
-
-    comb <- gTree(children = gList(seg.main,ticks,text),vp = vp)
-    # comb <- gList(seg.main,ticks,text)
-    return(comb)
-  }
-
-}
-
-
-
-
-#' Create a Color Key Grid
-#'
-#' This function creates a color key grid using the grid graphics system.
-#'
-#' @param x Numeric vector specifying the range for the x-axis.
-#' @param color Vector of color values to be used for the color key.
-#' @param color.n Number of colors to generate.
-#' @param ticks.side Side of the color key to display tick marks
-#' ("left", "right", "top", or "bottom").
-#' @param nbreaks the colorbar break numbers, default 5.
-#' @param ... other args passed by grid.xaxis2()/grid.yaxis2().
-#' @param pos Position of the color key ("h" for horizontal, "v" for vertical).
-#'
-#' @return NULL
-#'
-#' @importFrom grDevices colorRampPalette
-#'
-#' @export
-grid.colorkey <- function(x = NULL,
-                          color = NULL,
+match.col2val <- function(x = NULL,
+                          cols = c("white","red"),
                           color.n = 100,
-                          ticks.side = c("left","right","top","bottom"),
-                          pos = c("h","v"),
-                          nbreaks = 5,...){
-  pos <- match.arg(pos,c("h","v"))
-  ticks.side <- match.arg(ticks.side,c("left","right","top","bottom"))
-
-  # check position
-  if(pos == "v"){
-    x_scale <- c(0,1)
-    y_scale <- range(as.numeric(x))
-
-    xpos <- 0.5
-    ypos <- seq(0,1, length = color.n)
-
-    r_width = unit(1, "npc")
-    r_height = 1/(color.n - 1)
+                          value.limits = NULL){
+  if(is.null(value.limits)){
+    limits <- range(x)
   }else{
-    y_scale <- c(0,1)
-    x_scale <- range(as.numeric(x))
-
-    ypos <- 0.5
-    xpos <- seq(0,1, length = color.n)
-
-    r_width = 1/(color.n - 1)
-    r_height = unit(1, "npc")
+    limits <- value.limits
   }
 
-  # canvas
-  pushViewport(viewport(angle = 0,
-                        yscale = y_scale,
-                        xscale = x_scale))
-  # assign colors
-  if(is.null(color)){
-    cols <- c("blue","white","red")
-  }else{
-    cols <- color
-  }
+  new.x <- seq(range(x)[1],range(x)[2],length.out = color.n)
 
-  col_p <- colorRampPalette(cols)(color.n)
+  col_fun <- circlize::colorRamp2(limits, cols)
+  col_p <- col_fun(new.x)
+  value <- circlize::col2value(col_p, col_fun = col_fun)
 
-  # just
-  if(pos == "v"){
-    just <- c("bottom",rep("centre",color.n-2),"top")
+  value1 <- value[1:(color.n - 1)]
+  value2 <- value[2:color.n]
 
-    # loop to create color
-    for (i in 1:color.n) {
-      grid.rect(x = xpos,
-                y = ypos[i],
-                height = r_height,
-                width = r_width,
-                just = just[i],
-                gp = gpar(col = col_p[i], fill = col_p[i]))
-    }
-  }else{
-    just <- c("left",rep("centre",color.n-2),"right")
+  df <- data.frame(col = c(col_p[1:(color.n - 1)],col_p[color.n]),
+                   left = c(value1,value[color.n]),
+                   right = c(value2,value[color.n] + 1))
 
-    # loop to create color
-    for (i in 1:color.n) {
-      grid.rect(x = xpos[i],
-                y = ypos,
-                height = r_height,
-                width = r_width,
-                just = just[i],
-                gp = gpar(col = col_p[i], fill = col_p[i]))
-    }
-  }
-
-  grid.rect(gp = gpar(fill = NA))
-
-  # add axis
-  if(pos == "h"){
-    grid.xaxis2(side = ticks.side,tick.len = 0.25,breaks = nbreaks,...)
-  }else{
-    grid.yaxis2(side = ticks.side,tick.len = 0.25,breaks = nbreaks,...)
-  }
-  popViewport()
+  return(df)
 }
 
-
-#' Create a Color Key Grid
-#'
-#' This function creates a color key grid using the grid graphics system.
-#'
-#' @param x Numeric vector specifying the range for the x-axis.
-#' @param color Vector of color values to be used for the color key.
-#' @param color.n Number of colors to generate.
-#' @param ticks.side Side of the color key to display tick marks
-#' ("left", "right", "top", or "bottom").
-#' @param nbreaks the colorbar break numbers, default 5.
-#' @param pos Position of the color key ("h" for horizontal, "v" for vertical).
-#'
-#' @return return a gTree object
-#'
-#' @export
-grid.colorkey2 <- function(x = NULL,
-                           color = NULL,
-                           color.n = 100,
-                           ticks.side = c("left","right","top","bottom"),
-                           pos = c("h","v"),
-                           nbreaks = 5){
-  pos <- match.arg(pos,c("h","v"))
-  ticks.side <- match.arg(ticks.side,c("left","right","top","bottom"))
-
-  # check position
-  if(pos == "v"){
-    x_scale <- c(0,1)
-    y_scale <- range(as.numeric(x))
-
-    xpos <- 0.5
-    ypos <- seq(0,1, length = color.n)
-
-    r_width = unit(1, "npc")
-    r_height = 1/(color.n - 1)
-  }else{
-    y_scale <- c(0,1)
-    x_scale <- range(as.numeric(x))
-
-    ypos <- 0.5
-    xpos <- seq(0,1, length = color.n)
-
-    r_width = 1/(color.n - 1)
-    r_height = unit(1, "npc")
-  }
-
-  # canvas
-  vp <- viewport(angle = 0,yscale = y_scale,xscale = x_scale)
-  # assign colors
-  if(is.null(color)){
-    cols <- c("blue","white","red")
-  }else{
-    cols <- color
-  }
-
-  col_p <- colorRampPalette(cols)(color.n)
-
-  # just
-  just <- c(0,rep(0.5,color.n-2),1)
-
-  if(pos == "v"){
-    # to create color
-    rect.grob <- rectGrob(x = xpos,
-                          y = ypos,
-                          height = r_height,
-                          width = r_width,
-                          vjust = just,
-                          gp = gpar(col = col_p, fill = col_p),
-                          vp = vp)
-  }else{
-    # to create color
-    rect.grob <- rectGrob(x = xpos,
-                          y = ypos,
-                          height = r_height,
-                          width = r_width,
-                          hjust = just,
-                          gp = gpar(col = col_p, fill = col_p))
-  }
-
-  border.grob <- rectGrob(gp = gpar(fill = NA),vp = vp)
-
-  glist <- gTree(children = gList(rect.grob,border.grob),vp = vp)
-}
-
-
-
-
-#' Mapping a numeric range to colors
-#'
-#' @param cols the colors to be mapped, default c("white","red").
-#' @param cols.n the numbers color to be generated, default 100.
-#' @param range.val the data range to be mapped.
-#'
-#' @return a data.frame
-#' @export
-match.col2val <- function(cols = c("white","red"),
-                          cols.n = 100,
-                          range.val = NULL){
-  col_p <-grDevices::colorRampPalette(cols)(cols.n)
-  cut_range <- cut(range.val,cols.n)
-
-  labs <- levels(cut_range)
-  names(labs) <- col_p
-
-  # prepare color dataframe
-  left <- as.numeric(sapply(strsplit(labs, "\\(|,|\\]"),"[",2))
-  right <- as.numeric(sapply(strsplit(labs, "\\(|,|\\]"),"[",3))
-
-  range_col <- data.frame(col = names(labs),left = left,right = right)
-
-  return(range_col)
-}
 
 
 
