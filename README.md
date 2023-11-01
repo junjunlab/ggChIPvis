@@ -42,6 +42,8 @@ remotes::install_github("junjunlab/ggChIPvis")
 
 > ***[https://junjunlab.github.io/ggChIPvis-manual/](https://junjunlab.github.io/ggChIPvis-manual/)***
 
+---
+
 ## Related blogs
 
 - [ChIP-seq 可视化探索](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510110&idx=1&sn=5b8a12b864509d65c243b61d080350a9&chksm=c184922ff6f31b3943a3681def268998388a3a930b2c384f3d8ea33ff17a437cc4513fc1b286&token=353264504&lang=zh_CN#rd)
