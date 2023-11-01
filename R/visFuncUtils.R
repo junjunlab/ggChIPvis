@@ -305,7 +305,7 @@ draw.anno.fun <- function(group.list = NULL,
 getAttrs <- function(mat = NULL){
   class.mat <- attr(mat,"class")
 
-  if("normalizedMatrix" %in% class.mat || "deeptoolsMat" %in% class.mat){
+  if(inherits(class.mat,"normalizedMatrix") || inherits(class.mat,"deeptoolsMat")){
     # attributes
     upstream_index = attr(mat, "upstream_index")
     downstream_index = attr(mat, "downstream_index")

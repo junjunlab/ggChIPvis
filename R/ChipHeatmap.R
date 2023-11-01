@@ -145,7 +145,7 @@ ChipHeatmap <- function(norm.mat = NULL,
     # row.split <- rep("genes",nrow(mat))
 
     # check data source
-    if("deeptoolsMat" %in% class(norm.mat)){
+    if(inherits(norm.mat,"deeptoolsMat")){
       row.split <- rep(attr(norm.mat,"group_labels"),attr(norm.mat,"group_numbers"))
     }else{
       binding_sites <- nrow(norm.mat)
@@ -156,7 +156,7 @@ ChipHeatmap <- function(norm.mat = NULL,
     n.split <- length(splits)
 
     # calculate each panels y coordinate
-    if("deeptoolsMat" %in% class(norm.mat)){
+    if(inherits(norm.mat,"deeptoolsMat")){
       if(n.split > 1){
         # calculate each panels y coordinate
         if(keep.cluster.panel.same == TRUE){
