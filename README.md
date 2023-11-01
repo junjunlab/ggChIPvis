@@ -32,6 +32,7 @@ remotes::install_github("junjunlab/ggChIPvis")
 
 ## News
 
+- 2023/10/26  (Changing **grid.xaxis2/grid.yaxis2/grid.colorkey** into grobs.)
 - 2023/10/24  (Adding **ChipHeatmap** and **multiHeatmap** for visualization based on ***grid*** systerm.)
 - 2023/10/20  (Setting **independent** arg in **if** loop.)
 - 2023/10/18  (Add **group.split** in retriveData and **rowgroup.order** in ChipVis.)
