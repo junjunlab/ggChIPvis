@@ -44,8 +44,8 @@ remotes::install_github("junjunlab/ggChIPvis")
 
 ## Related blogs
 
-> [ChIP-seq 可视化探索](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510110&idx=1&sn=5b8a12b864509d65c243b61d080350a9&chksm=c184922ff6f31b3943a3681def268998388a3a930b2c384f3d8ea33ff17a437cc4513fc1b286&token=353264504&lang=zh_CN#rd)
-> [ggChIPvis 可视化基因组富集信号](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510122&idx=1&sn=f06cfbecb15ee4f133c9b3d49791743a&chksm=c184921bf6f31b0d471e37ef63fdc4c7caf63df2a6598bd1f3c04d9b1505e2e103ef4f60eb66&token=353264504&lang=zh_CN#rd)
-> [ChIP-seq 绘图设计](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510151&idx=1&sn=de70b667d6eb7f581a68fd3fc231b1fc&chksm=c18492f6f6f31be05a57cb681d802fb813e36ac67f3d70fb05d26a6ea1aeee14bd17a91844e7&token=353264504&lang=zh_CN#rd)
-> [ChIP-seq 绘图设计<<续>>](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510209&idx=1&sn=ea595989806aeaf116fab44f808d295e&chksm=c18492b0f6f31ba6832f666ee1734d258dcb0ad852a2982443668f735e46e86f2a9456a1059d&token=353264504&lang=zh_CN#rd)
+- [ChIP-seq 可视化探索](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510110&idx=1&sn=5b8a12b864509d65c243b61d080350a9&chksm=c184922ff6f31b3943a3681def268998388a3a930b2c384f3d8ea33ff17a437cc4513fc1b286&token=353264504&lang=zh_CN#rd)
+- [ggChIPvis 可视化基因组富集信号](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510122&idx=1&sn=f06cfbecb15ee4f133c9b3d49791743a&chksm=c184921bf6f31b0d471e37ef63fdc4c7caf63df2a6598bd1f3c04d9b1505e2e103ef4f60eb66&token=353264504&lang=zh_CN#rd)
+- [ChIP-seq 绘图设计](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510151&idx=1&sn=de70b667d6eb7f581a68fd3fc231b1fc&chksm=c18492f6f6f31be05a57cb681d802fb813e36ac67f3d70fb05d26a6ea1aeee14bd17a91844e7&token=353264504&lang=zh_CN#rd)
+- [ChIP-seq 绘图设计<<续>>](https://mp.weixin.qq.com/s?__biz=MzkyMTI1MTYxNA==&mid=2247510209&idx=1&sn=ea595989806aeaf116fab44f808d295e&chksm=c18492b0f6f31ba6832f666ee1734d258dcb0ad852a2982443668f735e46e86f2a9456a1059d&token=353264504&lang=zh_CN#rd)
 
