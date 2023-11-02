@@ -39,7 +39,7 @@ match.col2val <- function(x = NULL,
 
   df <- data.frame(col = c(col_p[1:(color.n - 1)],col_p[color.n]),
                    left = c(value1,value[color.n]),
-                   right = c(value2,value[color.n] + 1))
+                   right = c(value2,value[color.n] + 0.00001))
 
   return(df)
 }
