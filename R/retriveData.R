@@ -61,7 +61,7 @@ retriveData <- function(mat.list = NULL,
     # row split for binding sites
     if(is.null(row.split)){
       # check data source
-      if(inherits(mat.list[[x]],"deeptoolsMat")){
+      if("deeptoolsMat" %in% class(mat.list[[x]])){
         row_split <- rep(attr(mat.list[[x]],"group_labels"),attr(mat.list[[x]],"group_numbers"))
       }else{
         binding_sites <- nrow(mat.list[[x]])
@@ -72,7 +72,7 @@ retriveData <- function(mat.list = NULL,
     }
 
     # check sample names
-    if(is.null(sample.names) & inherits(mat.list[[x]],"deeptoolsMat")){
+    if(is.null(sample.names) & "deeptoolsMat" %in% class(mat.list[[x]])){
       sample_names <- attr(mat.list[[x]],"sample_name")
     }else{
       sample_names <- sample.names[x]
@@ -149,7 +149,7 @@ retriveData <- function(mat.list = NULL,
     # row split for binding sites
     if(is.null(row.split)){
       # check data source
-      if(inherits(mat.list[[x]],"deeptoolsMat")){
+      if("deeptoolsMat" %in% class(mat.list[[x]])){
         row_split <- rep(attr(mat.list[[x]],"group_labels"),attr(mat.list[[x]],"group_numbers"))
       }else{
         binding_sites <- nrow(mat.list[[x]])
@@ -160,7 +160,7 @@ retriveData <- function(mat.list = NULL,
     }
 
     # check sample names
-    if(is.null(sample.names) & inherits(mat.list[[x]],"deeptoolsMat")){
+    if(is.null(sample.names) & "deeptoolsMat" %in% class(mat.list[[x]])){
       sample_names <- attr(mat.list[[x]],"sample_name")
     }else{
       sample_names <- sample.names[x]
@@ -193,7 +193,7 @@ retriveData <- function(mat.list = NULL,
       attr(temp_mat, "target_index") <-  attr(mat.list[[x]], "target_index")
 
       # binding site order
-      if(inherits(norm_mat,"normalizedMatrix")){
+      if("normalizedMatrix" %in% class(norm_mat)){
         ii <- order(EnrichedHeatmap::enriched_score(temp_mat),decreasing = FALSE)
       }else{
         # heatmap rank method
@@ -253,7 +253,7 @@ retriveData <- function(mat.list = NULL,
   # ============================================================================
   class.mat <- attr(mat.list[[1]],"class")
 
-  if(inherits(class.mat,"normalizedMatrix") || inherits(class.mat,"deeptoolsMat")){
+  if("normalizedMatrix" %in% class.mat | "deeptoolsMat" %in% class.mat){
     upstream_index = attr(mat.list[[1]], "upstream_index")
     downstream_index = attr(mat.list[[1]], "downstream_index")
     target_index = attr(mat.list[[1]], "target_index")
