@@ -44,7 +44,7 @@ parseDeeptools <- function(deeptools_output = NULL){
   body <- as.numeric(unlist(strsplit(vals[3],split = ",")))
   binsize <- as.numeric(unlist(strsplit(vals[4],split = ",")))
   group_labels <- gsub('"',"",unlist(strsplit(vals[5],split = ",")),fixed = T)
-  group_boundaries <- as.numeric(unlist(strsplit(vals[6],split = ",")))[-1]
+  group_boundaries <- as.numeric(unlist(strsplit(vals[6],split = ",")))
   sample_labels <- gsub('"',"",unlist(strsplit(vals[7],split = ",")),fixed = T)
   sample_boundaries <- as.numeric(unlist(strsplit(vals[8],split = ",")))
 
@@ -71,7 +71,10 @@ parseDeeptools <- function(deeptools_output = NULL){
     if(length(group_boundaries) == 1){
       group_numbers <- group_boundaries
     }else{
-      group_numbers <- c(group_boundaries[1],Reduce(f = "-",x = rev(group_boundaries)))
+      # group_numbers <- c(group_boundaries[1],Reduce(f = "-",x = rev(group_boundaries)))
+      group_numbers <- sapply(seq_along(group_boundaries), function(x){
+        group_boundaries[x + 1] - group_boundaries[x]
+      }) %>% na.omit()
     }
 
     # assign attributes for matrix

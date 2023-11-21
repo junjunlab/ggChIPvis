@@ -437,6 +437,9 @@ ChipVis <- function(object = NULL,
           theme(strip.text.x = element_blank(),
                 strip.background.x = element_blank())
       }
+    }else{
+      ppfofile.new <- ppfofile.new
+      pheatmap.new <- pheatmap
     }
 
     # combine
